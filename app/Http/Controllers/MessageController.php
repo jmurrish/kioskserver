@@ -13,8 +13,15 @@ class MessageController extends Controller
 {
     //
 	
-	public function index(){
-		return view('messages.messagelist', ['messages' => Message::all()]);
+	public function index(Request $request){
+		
+		$status=$request->input('status');
+		
+		if ($status != ""){
+			$messages=Message::where('status', $status)->get();
+		}
+		else $messages=Message::all();
+		return view('messages.messagelist', ['messages' => $messages, 'status'=>$status]);
 	}
 	
 

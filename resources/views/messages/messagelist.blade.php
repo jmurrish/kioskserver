@@ -1,7 +1,15 @@
-@extends('layouts.main');
+@extends('layouts.main')
 
 @section('content')
 	<a href="/messages/create" class="btn btn-primary pull-right">New Message</a>
+
+<form method="get" action="/messages/" onChange="document.statusform.submit()" name="statusform" id="statusform">
+	<select name="status">
+		<option <?php if ($status=="") print "selected";?> value="">All</option>
+		<option <?php if ($status=="1") print "selected";?> value="1">Active</option>
+		<option <?php if ($status=="0") print "selected";?> value="0">Inactive</option>
+	</select>
+</form>
 	
 	<table class="table">
 		<thead>
