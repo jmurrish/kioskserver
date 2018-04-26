@@ -160,7 +160,16 @@ class MessageController extends Controller
 	}
 	
 	private function getactiveids(){
-		return Message::select('id')->where('status', 1)->get();
+		return Message::select('id')->where('status', 1)
+		->where(function ($query){
+			$query->whereNull('uptime')
+			->orWhere('uptime', '<=', Carbon::now());
+		})
+		->where(function ($query){
+			$query->whereNull('downtime')
+			->orWhere('downtime', '>=', Carbon::now());
+		})
+		->get();
 	
 	}
 	
