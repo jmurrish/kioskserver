@@ -131,6 +131,14 @@ class MessageController extends Controller
 		return Message::select('id')->where('status', 1)->get();
 	
 	}
+	
+	public function togglestatus(Request $request, Message $message){
+		
+		
+		$message->status = $request->input('toggle-'.$message->id);
+		$message->save();
+		return redirect()->back();
+	}
 }
 
 

@@ -26,6 +26,7 @@ Auth::routes();
 // Route::get('/home', 'MessageController@index')->name('home')->middleware('auth');
 
 Route::resource('/messages', 'MessageController');
+Route::post('/messages/togglestatus/{message}', 'MessageController@togglestatus');
 Route::get('/home', 'MessageController@index')->name('home');
 
 Route::get('/logout', function(){

@@ -28,7 +28,16 @@
 		<tr>
 			<td>{{$message->name}}</td>
 			<td>{{$message->messagebody}}</td>
-			<td>{{$message->status==1?'Active':'Inactive'}}</td>
+			<td>
+				<form method="post" action="/messages/togglestatus/{{$message->id}}" name="toggle-{{$message->id}}-frm" id="toggle-{{$message->id}}-frm">
+					{{ csrf_field() }}
+			<select name="toggle-{{$message->id}}" id="toggle-{{$message->id}}" class="togglestatus">
+				<option value="0" <?php if ($message->status == 0) print "selected";?>>Inactive</option>
+				<option value="1" <?php if ($message->status == 1) print "selected";?>>Active</option>
+			</select>
+			</form>
+			
+			</td>
 			<td><a href="/messages/{{$message->id}}/edit" class="btn btn-primary">Edit</a></td>
 		</tr>
 			@endforeach
@@ -47,6 +56,10 @@
 <script>
 	$('#newmsgbtn').on('click', function(){
 		document.location.href="/app/create";
+	});
+	
+	$('.togglestatus').on('change', function(){
+		$(this.form).submit();
 	});
 </script>
 @endsection
