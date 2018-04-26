@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     //
-	protected $fillable=['name', 'status', 'assetpath', 'messagebody'];
+	protected $fillable=['name', 'status', 'assetpath', 'messagebody', 'uptime', 'downtime'];
 }

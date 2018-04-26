@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Response;
+use Carbon\Carbon;
 
 
 use App\Message;
@@ -39,7 +40,18 @@ class MessageController extends Controller
 	public function store(Request $request){
 		
 		
-		$message=Message::create($request->all());
+		$requestdata = $request->all();
+		
+		
+		if ($requestdata['uptime'] != ''){
+			$requestdata['uptime'] = carbon::createFromFormat('YmdHi', date('YmdHi', strtotime($requestdata['uptime'])));
+		}
+		
+		if ($requestdata['downtime'] != ''){
+			$requestdata['downtime'] = carbon::createFromFormat('YmdHi', date('YmdHi', strtotime($requestdata['downtime'])));
+		}
+		
+		$message=Message::create($requestdata);
 		
 		if ($request->uploadphoto) {
 		    //
@@ -53,15 +65,25 @@ class MessageController extends Controller
 	}
 	
 	public function update(Request $request, Message $message){
+		$requestdata = $request->all();
 		
 		
-		$message->update($request->all());
+		if ($requestdata['uptime'] != ''){
+			$requestdata['uptime'] = carbon::createFromFormat('YmdHi', date('YmdHi', strtotime($requestdata['uptime'])));
+		}
+		
+		if ($requestdata['downtime'] != ''){
+			$requestdata['downtime'] = carbon::createFromFormat('YmdHi', date('YmdHi', strtotime($requestdata['downtime'])));
+		}
+		
+		$message->update($requestdata);
+		
+		
 		
 		if ($request->uploadphoto) {
 		    
 			
 			$fpath=$request->uploadphoto->store('slides', 'public');
-			// dd($fpath);
 			$message->assetpath=$fpath;
 			
 			
@@ -109,7 +131,17 @@ class MessageController extends Controller
 		
 		if ($startdate == "") $startdate="0000-00-00";
 		
-		$messages=Message::where('updated_at', '>', $startdate)->where('status', '=', 1)->get();
+		$messages=Message::where('updated_at', '>', $startdate)
+			->where('status', '=', 1)
+			->where(function ($query){
+				$query->whereNull('uptime')
+				->orWhere('uptime', '<=', Carbon::now());
+			})
+			->where(function ($query){
+				$query->whereNull('downtime')
+				->orWhere('downtime', '>=', Carbon::now());
+			})
+			->get();
 		$res=array();
 		$data=array();
 		$data['activeids']=$this->getactiveids()->toArray();

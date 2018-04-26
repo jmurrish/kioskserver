@@ -24,4 +24,14 @@
     @endif
   </div>
   
+  <div class="form-group">
+    <label for="name">Message Start Time</label>
+    <input type="text" class="form-control" id="uptime" name="uptime" value="{{$message->uptime}}">
+  </div>
+  
+  <div class="form-group">
+    <label for="name">Message Stop Time</label>
+    <input type="text" class="form-control" id="downtime" name="downtime" value="{{$message->downtime}}">
+  </div>
+  
   
