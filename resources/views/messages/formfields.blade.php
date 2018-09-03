@@ -34,4 +34,9 @@
     <input type="text" class="form-control" id="downtime" name="downtime" value="{{$message->downtime}}">
   </div>
   
+  <div class="form-group">
+    <label for="name">Slide Order</label>
+    <input type="text" class="form-control" id="slideorder" name="slideorder" value="{{$message->slideorder}}">
+  </div>
+  
   

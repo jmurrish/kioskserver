@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class PublishDateTest extends TestCase
 {
-	
+	use RefreshDatabase;
     /** @test */
     public function entries_with_no_publish_date_will_be_retrieved(){
     	DB::enableQueryLog();

@@ -19,9 +19,9 @@ class MessageController extends Controller
 		$status=$request->input('status');
 		
 		if ($status != ""){
-			$messages=Message::where('status', $status)->get();
+			$messages=Message::where('status', $status)->orderBy('slideorder', 'asc')->get();
 		}
-		else $messages=Message::all();
+		else $messages=Message::orderBy('slideorder', 'asc')->get();
 		return view('messages.messagelist', ['messages' => $messages, 'status'=>$status]);
 	}
 	
@@ -41,6 +41,8 @@ class MessageController extends Controller
 		
 		
 		$requestdata = $request->all();
+		
+		
 		
 		
 		if ($requestdata['uptime'] != ''){
@@ -65,6 +67,7 @@ class MessageController extends Controller
 	}
 	
 	public function update(Request $request, Message $message){
+		
 		$requestdata = $request->all();
 		
 		
@@ -77,7 +80,7 @@ class MessageController extends Controller
 		}
 		
 		$message->update($requestdata);
-		
+			
 		
 		
 		if ($request->uploadphoto) {
@@ -90,6 +93,10 @@ class MessageController extends Controller
 		}		
 		
 		$message->save();
+		
+		
+		
+		
 		return redirect('/messages');
 	}
 	
@@ -141,6 +148,7 @@ class MessageController extends Controller
 				$query->whereNull('downtime')
 				->orWhere('downtime', '>=', Carbon::now());
 			})
+				->orderBy('slideorder', 'asc')
 			->get();
 		$res=array();
 		$data=array();
@@ -169,6 +177,7 @@ class MessageController extends Controller
 			$query->whereNull('downtime')
 			->orWhere('downtime', '>=', Carbon::now());
 		})
+			->orderBy('slideorder', 'asc')
 		->get();
 	
 	}
