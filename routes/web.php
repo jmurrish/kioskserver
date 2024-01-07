@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\MessageController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,6 +38,10 @@ Route::get('/logout', function(){
 
 Route::get('/register', function(){
 	return redirect('/messages');
+});
+
+Route::get('/', function(Illuminate\Http\Request $request){
+	return view('kiosk');
 });
 
 

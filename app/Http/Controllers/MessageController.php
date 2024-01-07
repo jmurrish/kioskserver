@@ -131,6 +131,13 @@ class MessageController extends Controller
 	}
 	
 	public function getchanged(Request $request){
+		$data = $this->getchanged_data($request);
+		return Response::json([
+			'data' => $data,
+		], 200);
+	}
+
+	public function getchanged_data(Request $request){
 		// $request=new Request();
 		
 		
@@ -162,9 +169,7 @@ class MessageController extends Controller
 		}
 		
 		$data['messages']=$messages->toArray();
-		return Response::json([
-			'data' => $data,
-		], 200);
+		return $data;
 	}
 	
 	private function getactiveids(){
