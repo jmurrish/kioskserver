@@ -27,7 +27,9 @@ Auth::routes();
 // Route::resource('/messages', 'MessageController')->middleware('auth');
 // Route::get('/home', 'MessageController@index')->name('home')->middleware('auth');
 
-Route::resource('/messages', 'MessageController');
+// Route::resource('/messages', 'MessageController');
+Route::resource('/messages', 'MessageController')->middleware('auth');
+
 Route::post('/messages/togglestatus/{message}', 'MessageController@togglestatus');
 Route::get('/home', 'MessageController@index')->name('home');
 
