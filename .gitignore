@@ -11,3 +11,7 @@ npm-debug.log
 yarn-error.log
 .env
 database/mysql/*
+/public/build
+/storage/pail
+.phpunit.result.cache
+.phpunit.cache

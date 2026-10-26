@@ -8,7 +8,7 @@ use Response;
 use Carbon\Carbon;
 
 
-use App\Message;
+use App\Models\Message;
 
 class MessageController extends Controller
 {

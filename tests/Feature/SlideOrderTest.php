@@ -3,29 +3,26 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SlideOrderTest extends TestCase
 {
 	
 	use RefreshDatabase;
-    /**
-     @test
-     */
+    #[Test]
     public function can_add_order_field()
     {
-        $message = factory(\App\Message::class)->create(['slideorder'=>4]);
+        $message = \App\Models\Message::factory()->create(['slideorder'=>4]);
 		$this->assertDatabaseHas('Messages', ['id'=>$message->id]);
     }
 	
-    /**
-     @test
-     */
+    #[Test]
     public function messages_are_retrieved_in_order()
     {
-        $message1 = factory(\App\Message::class)->create(['slideorder'=>3, 'status'=>1]);
-		$message2 = factory(\App\Message::class)->create(['slideorder'=>2, 'status'=>1]);
-		$message3 = factory(\App\Message::class)->create(['slideorder'=>1, 'status'=>1]);
+        $message1 = \App\Models\Message::factory()->create(['slideorder'=>3, 'status'=>1]);
+		$message2 = \App\Models\Message::factory()->create(['slideorder'=>2, 'status'=>1]);
+		$message3 = \App\Models\Message::factory()->create(['slideorder'=>1, 'status'=>1]);
 		
 		
 		$response = $this->call('GET', '/messages/getActive')->json();

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\MessageController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,24 +16,24 @@ use App\Http\Controllers\MessageController;
 */
 \Debugbar::disable();
 
-Route::get('/messages/getActive', 'MessageController@getchanged');
+Route::get('/messages/getActive', [MessageController::class, 'getchanged']);
 
 
 
 
-// Route::get('/app', 'MessageController@index');
-// Route::get('/app/create', 'MessageController@create');
-// Route::get('/app/{message}', 'MessageController@show');
+// Route::get('/app', [MessageController::class, 'index']);
+// Route::get('/app/create', [MessageController::class, 'create']);
+// Route::get('/app/{message}', [MessageController::class, 'show']);
 
 Auth::routes();
-// Route::resource('/messages', 'MessageController')->middleware('auth');
-// Route::get('/home', 'MessageController@index')->name('home')->middleware('auth');
+// Route::resource('/messages', MessageController::class)->middleware('auth');
+// Route::get('/home', [MessageController::class, 'index'])->name('home')->middleware('auth');
 
-// Route::resource('/messages', 'MessageController');
-Route::resource('/messages', 'MessageController')->middleware('auth');
+// Route::resource('/messages', MessageController::class);
+Route::resource('/messages', MessageController::class)->middleware('auth');
 
-Route::post('/messages/togglestatus/{message}', 'MessageController@togglestatus');
-Route::get('/home', 'MessageController@index')->name('home');
+Route::post('/messages/togglestatus/{message}', [MessageController::class, 'togglestatus']);
+Route::get('/home', [MessageController::class, 'index'])->name('home');
 
 Route::get('/logout', function(){
 	Auth::logout();
