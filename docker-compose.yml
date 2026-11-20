@@ -34,7 +34,8 @@ services:
       - "9001:9000"
     volumes:
       - .:/var/www/html
-  
+      - ./docker/php.ini:/usr/local/etc/php/conf.d/uploads.ini
+
     networks:
       - kiosknet
 
